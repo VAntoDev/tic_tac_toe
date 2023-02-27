@@ -1,5 +1,4 @@
 class Grid
-  attr_accessor :rows 
 
   def initialize
     @@grid_rows = [
@@ -36,13 +35,36 @@ class Player < Grid
   end
 end
 
+class Game 
+  def initialize
+    @current_grid = Grid.new
+  end
+
+  def game_start
+    @current_grid.display
+    player1 = Player.new("X")
+    player2 = Player.new("O")
+    while true
+      player1.add_symbol_at(gets.chomp.to_i)
+      @current_grid.display
+      player2.add_symbol_at(gets.chomp.to_i)
+      @current_grid.display
+    end
+  end
+  
+end
+
+new_game = Game.new
+new_game.game_start
+
+=begin
 new_grid = Grid.new
 new_grid.display
 
 puts ""
 
 new_player = Player.new("X")
-new_player.add_symbol_at(4)
+new_player.add_symbol_at(gets.chomp.to_i)
 new_grid.display
 
 puts ""
@@ -50,3 +72,4 @@ puts ""
 new_player2 = Player.new("O")
 new_player2.add_symbol_at(7)
 new_grid.display
+=end
