@@ -91,16 +91,20 @@ class Game < Grid
 
     while true
       if turn == true
+        puts "Your turn player one! Place your X"
         if player1.add_symbol_at(gets.chomp.to_i) == true
           turn = false
         end
+        puts ""
       else
+        puts "Your turn player two! Place your O"
         if player2.add_symbol_at(gets.chomp.to_i) == true
           turn = true
         end
+        puts ""
       end
       
-      puts @current_grid.display
+      @current_grid.display
 
       if win_condition == true && turn == false
         puts "Player one wins!"
@@ -114,8 +118,8 @@ class Game < Grid
       end
     end
 
-    puts "Do you want to play again? Y to restart"
-    if gets.chomp == "Y"
+    puts "Do you want to play again? Press Y to restart"
+    if gets.chomp.upcase == "Y"
       puts "Lets restart!"
       new_game = Game.new
       new_game.game_start
