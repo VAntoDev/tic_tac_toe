@@ -6,6 +6,7 @@ class Grid
              [4, 5, 6],
              [7, 8, 9]
             ]
+    @@positioned_symbols = 0
   end    
 
   def display
@@ -49,6 +50,11 @@ class Grid
     if diagonal.uniq.count == 1
       return true
     end
+
+    if @@positioned_symbols == 9
+      return "Draw"
+    end
+    
   end
 end
 
@@ -63,9 +69,13 @@ class Player < Grid
       if @@grid_rows[row_index].include?(position)
         substitute = @@grid_rows[row_index].find_index(position)
         @@grid_rows[row_index][substitute] = player_symbol
+  
+        @@positioned_symbols += 1
+        return true
       end
     end
   end
+
 end
 
 class Game < Grid
@@ -77,22 +87,40 @@ class Game < Grid
     @current_grid.display
     player1 = Player.new("X")
     player2 = Player.new("O")
-    while true
-      player1.add_symbol_at(gets.chomp.to_i)
-      @current_grid.display
+    turn = true
 
-      if win_condition == true
+    while true
+      if turn == true
+        if player1.add_symbol_at(gets.chomp.to_i) == true
+          turn = false
+        end
+      else
+        if player2.add_symbol_at(gets.chomp.to_i) == true
+          turn = true
+        end
+      end
+      
+      puts @current_grid.display
+
+      if win_condition == true && turn == false
         puts "Player one wins!"
         break
-      end
-
-      player2.add_symbol_at(gets.chomp.to_i)
-      @current_grid.display
-
-      if win_condition == true
+      elsif win_condition == true && turn == true
         puts "Player two wins!"
         break
+      elsif win_condition == "Draw"
+        puts "Its a draw!"
+        break
       end
+    end
+
+    puts "Do you want to play again? Y to restart"
+    if gets.chomp == "Y"
+      puts "Lets restart!"
+      new_game = Game.new
+      new_game.game_start
+    else
+      puts "Goodbye!"
     end
   end
   
@@ -100,20 +128,3 @@ end
 
 new_game = Game.new
 new_game.game_start
-
-=begin
-new_grid = Grid.new
-new_grid.display
-
-puts ""
-
-new_player = Player.new("X")
-new_player.add_symbol_at(gets.chomp.to_i)
-new_grid.display
-
-puts ""
-
-new_player2 = Player.new("O")
-new_player2.add_symbol_at(7)
-new_grid.display
-=end
