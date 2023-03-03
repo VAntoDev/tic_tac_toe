@@ -47,6 +47,7 @@ class Grid
     @@grid_rows.reverse.each_with_index do | row, row_index |
       diagonal.push(row[row_index])
     end
+    
     if diagonal.uniq.count == 1
       return true
     end

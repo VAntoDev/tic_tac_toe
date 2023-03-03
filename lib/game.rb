@@ -1,4 +1,4 @@
-require_relative './Grid.rb'
+require_relative './grid'
 
 class Game < Grid
   def initialize
