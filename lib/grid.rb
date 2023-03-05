@@ -19,12 +19,25 @@ class Grid
 
   def win_condition
     
+    return true if horizontal_win == true || vertical_win == true || diagonal_win == true
+
+    if @@positioned_symbols == 9
+      return "Draw"
+    end
+    
+  end
+
+  private
+
+  def horizontal_win
     @@grid_rows.each_with_index do | row, row_index |
       if @@grid_rows[row_index].uniq.count == 1
         return true
       end
     end
-
+  end
+  
+  def vertical_win
     for i in 0..2
       vertical = []
       @@grid_rows.each do | row |
@@ -34,7 +47,9 @@ class Grid
         return true
       end
     end
+  end
 
+  def diagonal_win
     diagonal = []
     @@grid_rows.each_with_index do | row, row_index |
       diagonal.push(row[row_index])
@@ -51,10 +66,5 @@ class Grid
     if diagonal.uniq.count == 1
       return true
     end
-
-    if @@positioned_symbols == 9
-      return "Draw"
-    end
-    
   end
 end
