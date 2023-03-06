@@ -3,4 +3,4 @@ require_relative './lib/grid'
 require_relative './lib/player'
 
 new_game = Game.new
-new_game.game_start
+new_game.execution
